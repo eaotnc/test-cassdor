@@ -61,6 +61,20 @@
       "users": ["acme/demo"]
     }
   ],
+  "certs": [
+    {
+      "owner": "acme",
+      "name": "cert-acme",
+      "displayName": "Acme JWT Cert",
+      "scope": "JWT",
+      "type": "x509",
+      "cryptoAlgorithm": "RS256",
+      "bitSize": 4096,
+      "expireInYears": 20,
+      "certificate": "",
+      "privateKey": ""
+    }
+  ],
   "users": [
     {
       "owner": "acme",

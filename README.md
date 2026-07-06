@@ -107,6 +107,24 @@ npm run db:seed
 npm run db:reset        # drop, migrate, seed
 ```
 
+## Troubleshooting
+
+### `generate jwt token error: The cert "cert-acme" does not exist`
+
+The back-office OAuth app needs a JWT signing certificate in Casdoor. Fresh installs load it from `casdoor/conf/init_data.json`. If Casdoor was initialized before that cert was added, create it manually:
+
+```bash
+./casdoor/fix-cert.sh
+```
+
+Or reset Casdoor data:
+
+```bash
+docker compose down
+docker volume rm test-cassdor_casdoor_postgres_data
+docker compose up -d
+```
+
 first command
 
 ```
