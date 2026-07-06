@@ -1,0 +1,445 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-brand: #2563eb;
+  --color-brand-dark: #1d4ed8;
+  --color-sidebar: #0f172a;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: var(--color-surface);
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App shell ───────────────────────────────────────── */
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-sider {
+  background: var(--color-sidebar) !important;
+  box-shadow: 2px 0 12px rgba(15, 23, 42, 0.08);
+}
+
+.app-sider .ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+}
+
+.sider-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sider-brand-icon {
+  display: flex;
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  font-size: 18px;
+}
+
+.sider-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.sider-brand-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f8fafc;
+  letter-spacing: -0.01em;
+}
+
+.sider-brand-product {
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sider-menu {
+  flex: 1;
+  padding: 12px 10px;
+  background: transparent !important;
+  border-inline-end: none !important;
+}
+
+.sider-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sider-footer-text {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px !important;
+  padding: 0 24px !important;
+  background: #fff !important;
+  border-bottom: 1px solid var(--color-border);
+  line-height: 64px;
+}
+
+.app-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-breadcrumb {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.app-breadcrumb strong {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.app-header-user {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+
+.app-header-user:hover {
+  background: #f1f5f9;
+}
+
+.app-header-user-name {
+  display: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+}
+
+@media (min-width: 640px) {
+  .app-header-user-name {
+    display: block;
+  }
+}
+
+.app-content {
+  margin: 0;
+  padding: 28px 32px 40px;
+  min-height: calc(100vh - 64px);
+  background: var(--color-surface);
+}
+
+.app-content-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── Page layout ─────────────────────────────────────── */
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  margin: 0 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  color: #0f172a !important;
+}
+
+.page-subtitle {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.page-loading {
+  display: flex;
+  height: 320px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Cards ───────────────────────────────────────────── */
+
+.panel-card {
+  border: 1px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+
+.panel-card .ant-card-head {
+  border-bottom: 1px solid #f1f5f9;
+  min-height: 52px;
+}
+
+.panel-card .ant-card-head-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.stat-card {
+  border: 1px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-1px);
+}
+
+.stat-card-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.stat-card-icon {
+  display: flex;
+  height: 44px;
+  width: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.stat-card-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.stat-card-trend.up {
+  color: #059669;
+}
+
+.stat-card-trend.down {
+  color: #dc2626;
+}
+
+.stat-card-trend-label {
+  font-weight: 400;
+  color: #94a3b8;
+}
+
+/* ── Login ───────────────────────────────────────────── */
+
+.login-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.login-brand-panel {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px;
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%);
+  color: #f8fafc;
+}
+
+@media (min-width: 1024px) {
+  .login-brand-panel {
+    display: flex;
+  }
+}
+
+.login-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.login-brand-icon {
+  display: flex;
+  height: 48px;
+  width: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.login-brand-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.login-brand-tagline {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.login-brand-quote {
+  max-width: 360px;
+}
+
+.login-brand-quote p {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.login-brand-quote span {
+  display: block;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.login-form-panel {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  background: #fff;
+}
+
+.login-form-wrap {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 1024px) {
+  .login-mobile-brand {
+    display: none;
+  }
+}
+
+.login-form-title {
+  margin: 0 0 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.login-demo-hint {
+  margin-top: 24px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+  color: #64748b;
+  text-align: center;
+}
+
+.login-demo-hint code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  color: #334155;
+}
+
+/* ── Chart ───────────────────────────────────────────── */
+
+.revenue-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.revenue-bar-wrap {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.revenue-bar {
+  width: 100%;
+  border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+.revenue-bar-wrap:hover .revenue-bar {
+  opacity: 1;
+  transform: scaleY(1.02);
+  transform-origin: bottom;
+}
+
+.revenue-bar-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+/* ── Tables ──────────────────────────────────────────── */
+
+.data-table-card .ant-table-thead > tr > th {
+  background: #f8fafc !important;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b !important;
+}
+
+.data-table-card .ant-table-tbody > tr:hover > td {
+  background: #f8fafc !important;
+}
