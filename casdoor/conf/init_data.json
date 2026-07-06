@@ -1,0 +1,78 @@
+{
+  "organizations": [
+    {
+      "owner": "admin",
+      "name": "acme",
+      "displayName": "Acme",
+      "websiteUrl": "https://acme.io",
+      "passwordType": "plain",
+      "passwordOptions": ["AtLeast6"],
+      "countryCodes": ["US", "TH"],
+      "defaultApplication": "back-office",
+      "tags": [],
+      "languages": ["en"],
+      "enableSoftDeletion": false,
+      "isProfilePublic": false,
+      "disableSignin": false
+    }
+  ],
+  "applications": [
+    {
+      "owner": "admin",
+      "name": "back-office",
+      "displayName": "Back Office",
+      "homepageUrl": "http://localhost:3000",
+      "organization": "acme",
+      "cert": "cert-acme",
+      "enablePassword": true,
+      "enableSignUp": false,
+      "disableSignin": false,
+      "clientId": "acme-back-office",
+      "clientSecret": "back-office-secret-change-me",
+      "grantTypes": [
+        "authorization_code",
+        "password",
+        "refresh_token"
+      ],
+      "redirectUris": [
+        "http://localhost:3000",
+        "http://localhost:3000/"
+      ],
+      "tokenFormat": "JWT",
+      "expireInHours": 24,
+      "refreshExpireInHours": 168,
+      "failedSigninLimit": 5,
+      "failedSigninFrozenTime": 15
+    }
+  ],
+  "roles": [
+    {
+      "owner": "acme",
+      "name": "admin",
+      "displayName": "Administrator",
+      "isEnabled": true,
+      "users": ["acme/demo"]
+    },
+    {
+      "owner": "acme",
+      "name": "user",
+      "displayName": "User",
+      "isEnabled": true,
+      "users": ["acme/demo"]
+    }
+  ],
+  "users": [
+    {
+      "owner": "acme",
+      "name": "demo",
+      "type": "normal-user",
+      "password": "demo",
+      "displayName": "Demo User",
+      "email": "demo@acme.io",
+      "isAdmin": false,
+      "isForbidden": false,
+      "isDeleted": false,
+      "signupApplication": "back-office"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { REFRESH_COOKIE, endSession } from "@/lib/authServer";
+import { REFRESH_COOKIE, endSession } from "@/lib/casdoorServer";
 import { clearAuthCookies } from "@/lib/authCookies";
 
 export async function POST() {

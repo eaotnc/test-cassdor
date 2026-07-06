@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const ACCESS_COOKIE = "bo_access_token";
+const ACCESS_COOKIE = "cd_access_token";
 
 const ADMIN_ONLY_PREFIXES = ["/users"];
 

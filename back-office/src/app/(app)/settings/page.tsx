@@ -39,7 +39,7 @@ export default function SettingsPage() {
                     column={{ xs: 1, sm: 2 }}
                     bordered
                     size="middle"
-                    title="Account details"
+                    title="Casdoor account"
                     styles={{
                       label: { fontWeight: 500, background: "#f8fafc" },
                     }}

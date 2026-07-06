@@ -1,26 +1,64 @@
 services:
-  cassandra:
-    image: cassandra:5.0
-    container_name: cassandra
+  app-postgres:
+    image: postgres:16-alpine
+    container_name: cassdor-app-postgres
     restart: unless-stopped
-    ports:
-      - "${CASSANDRA_PORT:-9042}:9042"
     environment:
-      MAX_HEAP_SIZE: 512M
-      HEAP_NEWSIZE: 128M
+      POSTGRES_DB: ${APP_POSTGRES_DB:-acme}
+      POSTGRES_USER: ${APP_POSTGRES_USER:-acme}
+      POSTGRES_PASSWORD: ${APP_POSTGRES_PASSWORD:-acme}
+    ports:
+      - "${APP_POSTGRES_PORT:-5434}:5432"
     volumes:
-      - cassandra_data:/var/lib/cassandra
+      - app_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "cqlsh -e 'describe cluster'"]
-      interval: 15s
-      timeout: 10s
-      retries: 10
-      start_period: 60s
+      test: ["CMD-SHELL", "pg_isready -U ${APP_POSTGRES_USER:-acme} -d ${APP_POSTGRES_DB:-acme}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - acme
+
+  casdoor-postgres:
+    image: postgres:16-alpine
+    container_name: casdoor-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: casdoor
+      POSTGRES_DB: casdoor
+    volumes:
+      - casdoor_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d casdoor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - acme
+
+  casdoor:
+    image: casbin/casdoor:latest
+    container_name: casdoor
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "-c", "./server --createDatabase=true"]
+    ports:
+      - "${CASDOOR_PORT:-8000}:8000"
+    environment:
+      RUNNING_IN_DOCKER: "true"
+    volumes:
+      - ./casdoor/conf:/conf
+      - ./casdoor/conf/init_data.json:/init_data.json
+      - ./casdoor/logs:/logs
+    depends_on:
+      casdoor-postgres:
+        condition: service_healthy
     networks:
       - acme
 
 volumes:
-  cassandra_data:
+  app_postgres_data:
+  casdoor_postgres_data:
 
 networks:
   acme:

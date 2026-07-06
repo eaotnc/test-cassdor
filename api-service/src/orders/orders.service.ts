@@ -1,24 +1,21 @@
 import { Injectable } from "@nestjs/common";
-import { CassandraService } from "../cassandra/cassandra.service";
+import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
 export class OrdersService {
-  constructor(private readonly cassandra: CassandraService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    const result = await this.cassandra.execute(
-      "SELECT id, customer, amount, status, date FROM orders",
-    );
-
-    return result.rows
-      .map((o) => ({
-        key: o.id as string,
-        id: o.id as string,
-        customer: o.customer as string,
-        amount: o.amount as number,
-        status: o.status as "paid" | "pending" | "refunded",
-        date: o.date as string,
-      }))
-      .sort((a, b) => b.date.localeCompare(a.date));
+    const rows = await this.prisma.order.findMany({
+      orderBy: { date: "desc" },
+    });
+    return rows.map((o) => ({
+      key: o.id,
+      id: o.id,
+      customer: o.customer,
+      amount: o.amount,
+      status: o.status as "paid" | "pending" | "refunded",
+      date: o.date.toISOString().slice(0, 10),
+    }));
   }
 }

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { ACCESS_COOKIE } from "@/lib/authServer";
+import { ACCESS_COOKIE } from "@/lib/casdoorServer";
 
 const API_URL = process.env.API_SERVICE_URL ?? "http://localhost:4000";
 

@@ -6,7 +6,7 @@ import {
   decodeUser,
   isExpired,
   refreshGrant,
-} from "@/lib/authServer";
+} from "@/lib/casdoorServer";
 import { setAuthCookies, clearAuthCookies } from "@/lib/authCookies";
 
 export async function GET() {

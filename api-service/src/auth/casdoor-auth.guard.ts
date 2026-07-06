@@ -6,27 +6,33 @@ import {
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
-import { jwtVerify, type JWTPayload } from "jose";
+import { createRemoteJWKSet, jwtVerify, type JWTPayload } from "jose";
 import { IS_PUBLIC_KEY } from "./public.decorator";
 
 export type AuthUser = JWTPayload & {
-  username?: string;
-  email?: string;
   name?: string;
+  displayName?: string;
+  email?: string;
   roles?: string[];
 };
 
+function extractRoles(roles: unknown): string[] {
+  if (!Array.isArray(roles)) return [];
+  return roles.map((role) =>
+    typeof role === "string" ? role : ((role as { name?: string }).name ?? ""),
+  ).filter(Boolean);
+}
+
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
-  private secret: Uint8Array;
+export class CasdoorAuthGuard implements CanActivate {
+  private jwks: ReturnType<typeof createRemoteJWKSet>;
 
   constructor(
     private readonly config: ConfigService,
     private readonly reflector: Reflector,
   ) {
-    this.secret = new TextEncoder().encode(
-      this.config.getOrThrow<string>("JWT_SECRET"),
-    );
+    const url = this.config.getOrThrow<string>("CASDOOR_URL");
+    this.jwks = createRemoteJWKSet(new URL(`${url}/.well-known/jwks`));
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -47,8 +53,12 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     try {
-      const { payload } = await jwtVerify(header.slice(7), this.secret);
-      request.user = payload as AuthUser;
+      const { payload } = await jwtVerify(header.slice(7), this.jwks);
+      const roles = extractRoles((payload as { roles?: unknown }).roles);
+      request.user = {
+        ...(payload as JWTPayload),
+        roles,
+      };
       return true;
     } catch {
       throw new UnauthorizedException("Invalid or expired token");

@@ -4,7 +4,7 @@ import {
   ACCESS_COOKIE,
   REFRESH_COOKIE,
   type TokenResponse,
-} from "@/lib/authServer";
+} from "@/lib/casdoorServer";
 
 const isProd = process.env.NODE_ENV === "production";
 

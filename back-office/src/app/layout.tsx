@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Cassdor Console",
-  description: "Professional operations console backed by Cassandra",
+  description: "Professional operations console backed by PostgreSQL",
 };
 
 export default function RootLayout({

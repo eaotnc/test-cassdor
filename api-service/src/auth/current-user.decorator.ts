@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
-import type { AuthUser } from "./jwt-auth.guard";
+import type { AuthUser } from "./casdoor-auth.guard";
 
 export const CurrentUser = createParamDecorator(
   (_data: unknown, ctx: ExecutionContext): AuthUser | undefined => {

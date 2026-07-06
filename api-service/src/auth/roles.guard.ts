@@ -5,7 +5,7 @@ import {
   Injectable,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import type { AuthUser } from "./jwt-auth.guard";
+import type { AuthUser } from "./casdoor-auth.guard";
 import { ROLES_KEY } from "./roles.decorator";
 
 @Injectable()

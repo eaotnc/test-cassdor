@@ -1,33 +1,31 @@
 import { Injectable } from "@nestjs/common";
-import { CassandraService } from "../cassandra/cassandra.service";
+import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly cassandra: CassandraService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll(search?: string) {
-    const result = await this.cassandra.execute(
-      "SELECT id, name, email, role, status, last_active FROM app_users",
-    );
-
-    const rows = result.rows.map((u) => ({
-      key: u.id as string,
-      name: u.name as string,
-      email: u.email as string,
-      role: u.role as "Admin" | "Editor" | "Viewer",
-      status: u.status as "active" | "invited" | "suspended",
-      lastActive: u.last_active as string,
-    }));
+    const rows = await this.prisma.appUser.findMany({
+      orderBy: { name: "asc" },
+    });
 
     const q = search?.trim().toLowerCase();
-    if (!q) return rows.sort((a, b) => a.name.localeCompare(b.name));
+    const filtered = q
+      ? rows.filter(
+          (u) =>
+            u.name.toLowerCase().includes(q) ||
+            u.email.toLowerCase().includes(q),
+        )
+      : rows;
 
-    return rows
-      .filter(
-        (u) =>
-          u.name.toLowerCase().includes(q) ||
-          u.email.toLowerCase().includes(q),
-      )
-      .sort((a, b) => a.name.localeCompare(b.name));
+    return filtered.map((u) => ({
+      key: u.id,
+      name: u.name,
+      email: u.email,
+      role: u.role as "Admin" | "Editor" | "Viewer",
+      status: u.status as "active" | "invited" | "suspended",
+      lastActive: u.lastActive.toISOString().slice(0, 10),
+    }));
   }
 }

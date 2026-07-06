@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { passwordGrant, decodeUser } from "@/lib/authServer";
+import { passwordGrant, decodeUser } from "@/lib/casdoorServer";
 import { setAuthCookies } from "@/lib/authCookies";
 
 export async function POST(req: Request) {

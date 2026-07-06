@@ -8,4 +8,5 @@ dist/
 .next/
 
 # OS files
-.DS_Store
+.casdoor/logs/
+*.log
